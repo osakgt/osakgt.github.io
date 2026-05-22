@@ -1,0 +1,618 @@
+  <!DOCTYPE html>
+  <html lang="zh-CN"  
+      data-theme-mode="auto"
+  >
+  <head>
+  <meta charset="utf-8">
+  
+  
+  
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_ex15nbittbh';window.REIMU_CONFIG.clipboard_tips = {"success":{"zh-CN":"复制成功 (*^▽^*)"},"fail":{"zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://wdjmzlve.github.io';window.REIMU_CONFIG.relative = '/';</script>
+  <title>
+    尝试在单片机中使用类似自动注册的方式 | Meager Cottage
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic|Noto Serif SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic|Noto Serif SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media='all'">
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_ex15nbittbh.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+    <meta name="description" content="Linux内核自动注册机制在单片机开发中的应用笔记1 概述稍微了解了一下Linux内核的自动注册机制，想要应用于单片机的开发，改变一下每加一个模块的初始化都需要在main函数手动调用一遍初始化函数的问题。 2 裸机实现自动注册的基本思路对于裸机开发，自己实现自动注册的方式需要两步：  一个函数指针数组：用于存储各个初始化函数的指针。 一个遍历函数：从头到尾遍历这个函数指针数组，依次调用每个函数。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="尝试在单片机中使用类似自动注册的方式">
+<meta property="og:url" content="http://wdjmzlve.github.io/2026/05/21/%E5%9C%A8%E5%8D%95%E7%89%87%E6%9C%BA%E5%BC%80%E5%8F%91%E4%B8%AD%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%86%8C%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="Meager Cottage">
+<meta property="og:description" content="Linux内核自动注册机制在单片机开发中的应用笔记1 概述稍微了解了一下Linux内核的自动注册机制，想要应用于单片机的开发，改变一下每加一个模块的初始化都需要在main函数手动调用一遍初始化函数的问题。 2 裸机实现自动注册的基本思路对于裸机开发，自己实现自动注册的方式需要两步：  一个函数指针数组：用于存储各个初始化函数的指针。 一个遍历函数：从头到尾遍历这个函数指针数组，依次调用每个函数。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-21T15:48:29.300Z">
+<meta property="article:modified_time" content="2026-05-21T16:14:13.896Z">
+<meta property="article:author" content="wdjmzlve">
+<meta name="twitter:card" content="summary">
+    <link rel="alternate" href="/atom.xml" title="Meager Cottage" type="application/atom+xml">
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx/1oA/0l8ysE" crossorigin="anonymous">
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.2/dist/aos.css" integrity="sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa" crossorigin="anonymous">
+
+    <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://npm.webcache.cn/aplayer@1.10.1/dist/APlayer.min.css" integrity="sha384-tLMkTWh2pfXNWGFlUS0w1TFtRG5xZ9lPWFOooj+vDDLIL+xBGQU/voDBY5XE2lVh" crossorigin="anonymous">
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+  <body>
+      <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate">
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+      </div>
+      <div class="loading-word">少女祈祷中...</div>
+    </div>
+  </div>
+  <script>
+    var time = null;
+    var loaderEl = document.getElementById('loader');
+    var startLoading = () => {
+      time = Date.now();
+      loaderEl.classList.remove("loading");
+    }
+    var hideLoader = () => {
+      document.body.style.overflow = 'auto';
+      loader.classList.add('loading');
+    };
+
+    var endLoading = () => {
+      if (!time) {
+        hideLoader();
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          hideLoader();
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    loaderEl.addEventListener('click', endLoading);
+  </script>
+<div id="copy-tooltip"></div>
+<div id="heatmap-tooltip"></div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav" aria-label="Primary navigation">
+        <a class="main-nav-link-wrap" href="/">
+            <div class="main-nav-icon icon rotate">
+                &#xe62b;
+            </div>
+          <span class="main-nav-link">首页</span>
+        </a>
+        <a class="main-nav-link-wrap" href="/archives">
+            <div class="main-nav-icon icon rotate">
+                &#xe62b;
+            </div>
+          <span class="main-nav-link">归档</span>
+        </a>
+        <a class="main-nav-link-wrap" href="/about">
+            <div class="main-nav-icon icon rotate">
+                &#xe62b;
+            </div>
+          <span class="main-nav-link">关于</span>
+        </a>
+        <a class="main-nav-link-wrap" href="/friend">
+            <div class="main-nav-icon icon rotate">
+                &#xe62b;
+            </div>
+          <span class="main-nav-link">友链</span>
+        </a>
+    <a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
+  </nav>
+  <nav id="sub-nav" aria-label="Secondary navigation">
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅" aria-label="RSS 订阅" target="_blank"></a>
+  </nav>
+</div>
+<header id="header" aria-label="Site header">
+        <picture>
+        </picture>
+          <img  fetchpriority="high" src="/images/banner.webp" alt="尝试在单片机中使用类似自动注册的方式">
+  <div id="header-outer">
+    <div id="header-title">
+          <span id="logo">
+            <h1 data-aos="slide-up">尝试在单片机中使用类似自动注册的方式</h1>
+          </span>
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+        </h2>
+    </div>
+  </div>
+</header>
+
+        <div id="content" aria-label="Page content" class="sidebar-left"  >
+          <aside id="sidebar" aria-label="Sidebar">
+  <div class="sidebar-wrapper-container sticky">
+  <div class="sidebar-wrapper">
+    <div class="sidebar-wrap" data-aos="fade-up">
+          <div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class" >
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E5%86%85%E6%A0%B8%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%86%8C%E6%9C%BA%E5%88%B6%E5%9C%A8%E5%8D%95%E7%89%87%E6%9C%BA%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">Linux内核自动注册机制在单片机开发中的应用笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%A3%B8%E6%9C%BA%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%86%8C%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="toc-number">1.2.</span> <span class="toc-text">2 裸机实现自动注册的基本思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%B3%A8%E5%86%8C%E6%97%B6%E6%9C%BA%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">3 注册时机的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8GCC%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95%EF%BC%9Aattribute"><span class="toc-number">1.4.</span> <span class="toc-text">4 使用GCC扩展语法：attribute</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-attribute-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 __attribute__基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9Aconstructor"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 方案一：constructor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9Asection"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 方案二：section</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-1-%E5%A4%9A%E7%BC%96%E8%AF%91%E5%99%A8%E5%85%BC%E5%AE%B9%E5%86%99%E6%B3%95"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">4.3.1 多编译器兼容写法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-section%E6%96%B9%E6%A1%88%E4%B8%AD%E9%93%BE%E6%8E%A5%E8%84%9A%E6%9C%AC%E7%9A%84%E4%BF%AE%E6%94%B9"><span class="toc-number">1.4.4.</span> <span class="toc-text">4.4 section方案中链接脚本的修改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%8F%82%E8%80%83%E7%8E%B0%E6%9C%89%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%81%9A%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">5 参考现有系统的做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%BD%93%E5%89%8D%E8%BF%9B%E5%B1%95%E4%B8%8E%E5%BE%85%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.6.</span> <span class="toc-text">6 当前进展与待解决问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%80%BB%E7%BB%93"><span class="toc-number">1.7.</span> <span class="toc-text">7 总结</span></a></li></ol></li></ol>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="wdjmzlve" class="lazyload">
+  <div class="sidebar-author-name">wdjmzlve</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social" >
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/wdjmzlve itemprop="url" target="_blank" aria-label="github" rel="noopener nofollow noreferrer"></a>
+    </div>
+</div>
+<div class="sidebar-menu">
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+          <div class="sidebar-menu-icon icon rotate">
+              &#xe62b;
+          </div>
+        <div class="sidebar-menu-link">首页</div>
+      </div>
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+          <div class="sidebar-menu-icon icon rotate">
+              &#xe62b;
+          </div>
+        <div class="sidebar-menu-link">归档</div>
+      </div>
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+          <div class="sidebar-menu-icon icon rotate">
+              &#xe62b;
+          </div>
+        <div class="sidebar-menu-link">关于</div>
+      </div>
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+          <div class="sidebar-menu-icon icon rotate">
+              &#xe62b;
+          </div>
+        <div class="sidebar-menu-link">友链</div>
+      </div>
+</div>
+</div>
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+    </div>
+  </div>
+  <div class="sidebar-widget">
+  </div>
+      <meting-js
+        theme="var(--color-link)"
+        id="3011486539"
+        server="netease"
+        type="playlist"
+        auto="true"
+        fixed="false"
+        autoplay="false"
+        loop="all"
+        order="list"
+        preload="auto"
+        volume="0.7"
+        mutex="true"
+        list-folded="true"
+        lrc-type="0"
+        class="aplayer-after-widget"
+      ></meting-js>
+  </div>
+</aside>
+
+          <section id="main" aria-label="Main content"><article id="post-在单片机开发中实现自动注册机制" class="h-entry article" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <span class="article-date-link icon-calendar" data-aos="zoom-in">
+    <time datetime="2026-05-21T15:48:29.300Z" itemprop="datePublished">2026-05-21</time>
+    <time style="display: none;" id="post-update-time">2026-05-22</time>
+  </span>
+</div>
+
+    </div>
+    
+    <div class="hr-line"></div>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+        <h1 id="Linux内核自动注册机制在单片机开发中的应用笔记"><a href="#Linux内核自动注册机制在单片机开发中的应用笔记" class="headerlink" title="Linux内核自动注册机制在单片机开发中的应用笔记"></a>Linux内核自动注册机制在单片机开发中的应用笔记</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>稍微了解了一下Linux内核的自动注册机制，想要应用于单片机的开发，改变一下每加一个模块的初始化都需要在main函数手动调用一遍初始化函数的问题。</p>
+<h2 id="2-裸机实现自动注册的基本思路"><a href="#2-裸机实现自动注册的基本思路" class="headerlink" title="2 裸机实现自动注册的基本思路"></a>2 裸机实现自动注册的基本思路</h2><p>对于裸机开发，自己实现自动注册的方式需要两步：</p>
+<ol>
+<li>一个函数指针数组：用于存储各个初始化函数的指针。</li>
+<li>一个遍历函数：从头到尾遍历这个函数指针数组，依次调用每个函数。</li>
+</ol>
+<p>在main函数里，初始化只需要调用一次这个遍历函数，不需要后续手动添加——这是想要实现的效果。</p>
+<h2 id="3-注册时机的问题"><a href="#3-注册时机的问题" class="headerlink" title="3 注册时机的问题"></a>3 注册时机的问题</h2><p>注册必须在遍历之前。但如果直接写在main函数里面，每新增一个函数都要自己写一遍，实际上和自己手动添加初始化函数没有区别。理想效果：每写完一个初始化函数就调用一次注册函数，注册函数的位置不硬性要求在main函数内部——只需调用一次注册函数，之后执行时所有注册的函数都会被自动调用。</p>
+<h2 id="4-使用GCC扩展语法：attribute"><a href="#4-使用GCC扩展语法：attribute" class="headerlink" title="4 使用GCC扩展语法：attribute"></a>4 使用GCC扩展语法：<strong>attribute</strong></h2><h3 id="4-1-attribute-基本概念"><a href="#4-1-attribute-基本概念" class="headerlink" title="4.1 __attribute__基本概念"></a>4.1 __attribute__基本概念</h3><p><code>__attribute__</code>是GCC编译器提供的一种语法扩展，用于给变量、函数、结构体等附加编译属性。常见语法结构为<code>__attribute__((属性名1, 属性名2, ...))</code>，可以用在函数定义&#x2F;声明、变量定义、结构体&#x2F;联合&#x2F;枚举类型以及函数指针类型上。</p>
+<h3 id="4-2-方案一：constructor"><a href="#4-2-方案一：constructor" class="headerlink" title="4.2 方案一：constructor"></a>4.2 方案一：constructor</h3><p><code>constructor</code>属性修饰的函数会被添加到<code>.init_array</code>段，在<code>main()</code>函数之前被自动调用。GNUC编译器支持<code>__attribute__((constructor[(priority)]))</code>，其中<code>priority</code>为可选的整数优先级参数，数值越小优先级越高，默认为100。</p>
+<p>单片机启动流程大致如下：</p>
+<ul>
+<li>执行<code>reset_handler</code></li>
+<li>执行<code>SystemInit</code>做时钟初始化</li>
+<li>进入<code>__main</code>函数，该函数负责：<ul>
+<li>拷贝<code>.data</code>段</li>
+<li>清零<code>.bss</code>段</li>
+<li>调用C语言各种底层函数，其中包含<code>__libc_init_array()</code></li>
+</ul>
+</li>
+<li>在<code>__libc_init_array()</code>中，执行被<code>constructor</code>修饰的、放在<code>init_array</code>段的函数进行注册</li>
+<li>最后进入<code>main</code>函数执行遍历</li>
+</ul>
+<p><strong>存在的问题</strong>：单片机对初始化顺序有严格要求，而<code>constructor</code>方式的注册顺序虽然可通过优先级参数控制，但仍然存在一定的风险。此外，资源开销较大（需要定义全局数组），且在ARMCC 5等编译器中可能不完全支持<code>constructor</code>属性。</p>
+<h3 id="4-3-方案二：section"><a href="#4-3-方案二：section" class="headerlink" title="4.3 方案二：section"></a>4.3 方案二：section</h3><p><code>section</code>方案通过将函数指针放入自定义段来实现自动注册。使用如下宏定义实现函数注册：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> __attribute__((used, section(<span class="string">&quot;.callback_array&quot;</span>))) const initFunc __init_##cb = cb;</span></span><br><span class="line"><span class="keyword">typedef</span> (*initFunc)(<span class="type">void</span>*cb);</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li>这个宏定义<strong>不涉及函数调用</strong>，仅在编译过程中生成一个静态的函数指针变量。</li>
+<li>将该指针变量的地址放入自定义的段（如<code>.callback_array</code>）中。</li>
+<li>自己实现遍历函数，对这个段内的函数指针进行遍历。</li>
+<li>在<code>main</code>中调用这个遍历函数。</li>
+</ul>
+<h4 id="4-3-1-多编译器兼容写法"><a href="#4-3-1-多编译器兼容写法" class="headerlink" title="4.3.1 多编译器兼容写法"></a>4.3.1 多编译器兼容写法</h4><p>实际项目中可能需要考虑不同编译器的兼容性，可采用条件编译的方式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> defined(__CC_ARM) || defined(__CLANG_ARM)   <span class="comment">/* ARMCC Complier */</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> INIT_SECTION(x) __attribute__((section(x)))</span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> INIT_USED __attribute__((used))</span></span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> defined(__ICCARM__)                       <span class="comment">/* IAR ARMCC Complier */</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> INIT_SECTION(x) __section(x)</span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> INIT_USED __root</span></span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> defined(__GNUC__)                         <span class="comment">/* GNUC Complier */</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> INIT_SECTION(x) __attribute__((section(x)))</span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> INIT_USED __attribute__((used))</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">error</span> <span class="string">&quot;not support tool chain&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>参考代码结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="title function_">void</span> <span class="params">(*init_func)</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    init_func _init_func;</span><br><span class="line">&#125; <span class="type">init_func_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INIT_EXPORT(handler) \</span></span><br><span class="line"><span class="meta">    INIT_USED init_func_t _init_##handler##_func INIT_SECTION(<span class="string">&quot;INIT_LIST&quot;</span>) = &#123; handler &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">sys_init</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="type">init_func_t</span> *index;</span><br><span class="line">    <span class="meta">#<span class="keyword">if</span> defined(__CC_ARM) || defined(__CLANG_ARM)</span></span><br><span class="line">        <span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> INIT_LIST$$Base;</span><br><span class="line">        <span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> INIT_LIST$$Limit;</span><br><span class="line">        init_list_begin = (<span class="type">init_func_t</span> *)&amp;INIT_LIST$$Base;</span><br><span class="line">        init_list_end = (<span class="type">init_func_t</span> *)&amp;INIT_LIST$$Limit;</span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="keyword">for</span>(index = init_list_begin; index &lt; init_list_end; index++) &#123;</span><br><span class="line">        index-&gt;_init_func();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">MY_USART_Init</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    __MY_USART_Init(<span class="number">115200</span>);</span><br><span class="line">&#125;</span><br><span class="line">INIT_EXPORT(MY_USART_Init);</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    sys_init();</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">/* main loop */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方式最早见于Linux内核，内核中的许多子系统和驱动模块都使用类似的<code>xxx_init</code>修饰符，将函数指针放置到特定的链接段中，在启动阶段由初始化代码自动调用。</p>
+<h3 id="4-4-section方案中链接脚本的修改"><a href="#4-4-section方案中链接脚本的修改" class="headerlink" title="4.4 section方案中链接脚本的修改"></a>4.4 <code>section</code>方案中链接脚本的修改</h3><p>要实现<code>section</code>方案，需要修改链接脚本（Linker Script）。链接脚本用于指定可执行文件的内存布局，包括代码、数据和其他段的放置位置。</p>
+<p>典型实现方式如下：</p>
+<ul>
+<li>在链接脚本中定义自定义段，并在其中定义段起始和结束符号</li>
+<li>使用<code>SORT</code>指令对段内的函数指针进行排序</li>
+</ul>
+<p>参考Linux内核的做法，.initcall节通过链接脚本定义，类似以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">__initcall_start = .;</span><br><span class="line">.initcall.init : &#123;</span><br><span class="line">    *(.initcall0.init)</span><br><span class="line">    *(.initcall1.init)</span><br><span class="line">    *(.initcall2.init)</span><br><span class="line">    *(.initcall3.init)</span><br><span class="line">    *(.initcall4.init)</span><br><span class="line">    *(.initcall5.init)</span><br><span class="line">&#125;</span><br><span class="line">__initcall_end = .;</span><br></pre></td></tr></table></figure>
+
+<p>通过定义不同优先级的子段（0-5），可以控制初始化函数的执行顺序。在实际单片机项目中，需要针对具体的芯片和工具链编写相应的链接脚本，并注意语法细节的兼容性。</p>
+<h2 id="5-参考现有系统的做法"><a href="#5-参考现有系统的做法" class="headerlink" title="5 参考现有系统的做法"></a>5 参考现有系统的做法</h2><ul>
+<li><strong>RT-Thread操作系统</strong>：默认使用了类似Linux内核的initcall机制，自定义优先级，按照优先级收集函数指针，并通过链接器脚本对函数指针排序后自动执行。</li>
+<li><strong>裸机或FreeRTOS</strong>：没有这个机制，因此需要手动尝试实现。</li>
+</ul>
+<h2 id="6-当前进展与待解决问题"><a href="#6-当前进展与待解决问题" class="headerlink" title="6 当前进展与待解决问题"></a>6 当前进展与待解决问题</h2><p>关于section的实现方法：</p>
+<ul>
+<li>因为是手动遍历，为了控制各种初始化的调用顺序，需要定义不同的初始化等级。</li>
+<li>还需要修改链接器脚本——这方面还不是很懂，仍在研究中。</li>
+</ul>
+<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7 总结"></a>7 总结</h2><p>以上是一些记录<br>&#96;&#96;&#96;</p>
+
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+    <nav id="article-nav" aria-label="Article navigation" data-aos="fade-up">
+    <div class="article-nav-link-wrap right">
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="Hello World" class="lazyload">
+      <a href="/2026/05/17/hello-world/" aria-label="后一篇: Hello World"  title="后一篇: Hello World"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+          Hello World
+      </h3>
+    </div>
+  </nav>
+
+</article>
+
+
+</section>
+        </div>
+        <footer id="footer" aria-label="Site footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    <div>
+      <span class="icon-copyright"></span>
+        2020-2026
+        <span class="footer-info-sep rotate"></span>
+      wdjmzlve
+    </div>
+      <div>
+        基于&nbsp;<a href="https://hexo.io/" rel="noopener nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+      <div>
+        <span class="icon-brush"></span>
+        2.4k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        00:11
+      </div>
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+  </div>
+</footer>
+
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav" aria-label="Mobile navigation">
+  <div class="sidebar-wrap">
+        <div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class" >
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E5%86%85%E6%A0%B8%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%86%8C%E6%9C%BA%E5%88%B6%E5%9C%A8%E5%8D%95%E7%89%87%E6%9C%BA%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">Linux内核自动注册机制在单片机开发中的应用笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%A3%B8%E6%9C%BA%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%86%8C%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="toc-number">1.2.</span> <span class="toc-text">2 裸机实现自动注册的基本思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%B3%A8%E5%86%8C%E6%97%B6%E6%9C%BA%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">3 注册时机的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8GCC%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95%EF%BC%9Aattribute"><span class="toc-number">1.4.</span> <span class="toc-text">4 使用GCC扩展语法：attribute</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-attribute-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 __attribute__基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9Aconstructor"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 方案一：constructor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9Asection"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 方案二：section</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-1-%E5%A4%9A%E7%BC%96%E8%AF%91%E5%99%A8%E5%85%BC%E5%AE%B9%E5%86%99%E6%B3%95"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">4.3.1 多编译器兼容写法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-section%E6%96%B9%E6%A1%88%E4%B8%AD%E9%93%BE%E6%8E%A5%E8%84%9A%E6%9C%AC%E7%9A%84%E4%BF%AE%E6%94%B9"><span class="toc-number">1.4.4.</span> <span class="toc-text">4.4 section方案中链接脚本的修改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%8F%82%E8%80%83%E7%8E%B0%E6%9C%89%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%81%9A%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">5 参考现有系统的做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%BD%93%E5%89%8D%E8%BF%9B%E5%B1%95%E4%B8%8E%E5%BE%85%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.6.</span> <span class="toc-text">6 当前进展与待解决问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%80%BB%E7%BB%93"><span class="toc-number">1.7.</span> <span class="toc-text">7 总结</span></a></li></ol></li></ol>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="wdjmzlve" class="lazyload">
+  <div class="sidebar-author-name">wdjmzlve</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social" >
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/wdjmzlve itemprop="url" target="_blank" aria-label="github" rel="noopener nofollow noreferrer"></a>
+    </div>
+</div>
+<div class="sidebar-menu">
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+          <div class="sidebar-menu-icon icon rotate">
+              &#xe62b;
+          </div>
+        <div class="sidebar-menu-link">首页</div>
+      </div>
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+          <div class="sidebar-menu-icon icon rotate">
+              &#xe62b;
+          </div>
+        <div class="sidebar-menu-link">归档</div>
+      </div>
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+          <div class="sidebar-menu-icon icon rotate">
+              &#xe62b;
+          </div>
+        <div class="sidebar-menu-link">关于</div>
+      </div>
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+          <div class="sidebar-menu-icon icon rotate">
+              &#xe62b;
+          </div>
+        <div class="sidebar-menu-link">友链</div>
+      </div>
+</div>
+</div>
+  </div>
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+</nav>
+
+    </div>
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+  <script>
+    var setupFirework = () => {
+      if (!false || !window.matchMedia('(max-width: 768px)').matches) {
+        window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["var(--red-1)","var(--red-2)","var(--red-3)","var(--red-4)"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["var(--red-0)"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'));
+      }
+    }
+  </script>
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.2.0/dist/index.umd.js" integrity="sha384-qi9WggRt19tv8Vc7pCHW3ulMNLwrn515zaLEWZjl1px07vz8+pUoWX8n1rgq282T" crossorigin="anonymous" onload="setupFirework()" defer></script>
+
+
+  
+<script src="https://npm.webcache.cn/theme-shokax-pjax@0.0.3/dist/index.umd.js" integrity="sha384-xneY1WY8hOfUzswrE4CrYq35N4BdVcxqxwHPr9zawE&#x2F;jMSCxD+jAPU55x&#x2F;jj3wlf" crossorigin="anonymous"></script>
+
+  
+<script src="/js/pjax.js"></script>
+
+
+
+
+  
+<script src="https://npm.webcache.cn/quicklink@3.0.1/dist/quicklink.umd.js" integrity="sha384-caMDqvgav&#x2F;HWdEYQU1QRRHMLleigpL1YHAG0m371DhzfL8rRzUyOb+bEHtwlmYjD" crossorigin="anonymous"></script>
+
+  <script data-pjax>
+    window.quicklink?.listen({
+      timeout: 3000,
+      priority: true,
+      ignores: []
+    });
+  </script>
+
+<div id="lazy-script">
+  <div>
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "wdjmzlve",
+          title: "尝试在单片机中使用类似自动注册的方式",
+          url: "http://wdjmzlve.github.io/2026/05/21/%E5%9C%A8%E5%8D%95%E7%89%87%E6%9C%BA%E5%BC%80%E5%8F%91%E4%B8%AD%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%86%8C%E6%9C%BA%E5%88%B6/",
+          excerpt: "",
+          description: "",
+          stripContent: "Linux内核自动注册机制在单片机开发中的应用笔记1 概述稍微了解了一下Linux内核的自动注册机制，想要应用于单片机的开发，改变一下每加一个模块的初始化都需要在main函数手动调用一遍初始化函数的问题。 2 裸机实现自动注册的基本思路对于裸机开发，自己实现自动注册的方式需要两步：  一个函数指针数组：用于存储各个初始化函数的指针。 一个遍历函数：从头到尾遍历这个函数指针数组，依次调用每个函数。  在main函数里，初始化只需要调用一次这个遍历函数，不需要后续手动添加——这是想要实现的效果。 3",
+          date: "Thu May 21 2026 23:48:29 GMT+0800",
+          updated: "Fri May 22 2026 00:14:13 GMT+0800",
+          cover: "/images/banner.webp",
+        };
+      </script>
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+      
+<script src="/js/tabs.js" data-pjax defer></script>
+
+      <script type="module" data-pjax>
+        (async () => {
+          const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+          const initPswp = (gallery, children) => {
+            if (_$$(`${gallery} ${children}`).length > 0) {
+              new PhotoSwipeLightbox({
+                gallery,
+                children,
+                pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+              }).init();
+            }
+          }
+          const pswp = () => {
+            initPswp('.article-entry', 'a.article-gallery-item');
+            initPswp('.article-gallery', 'a.article-gallery-item');
+          }
+          pswp();
+        })();
+      </script>
+        
+
+
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.12.5' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+    <script>
+      var setupAPlayer = () => {
+        if (!true || !window.matchMedia('(max-width: 768px)').matches) {
+          if (window.matchMedia('(max-width: 959px)').matches) {
+            const meting = _$('meting-js');
+            if (meting) {
+              meting.setAttribute('fixed', 'true');
+              const aside = meting.parentNode?.parentNode;
+              if (aside?.tagName === 'ASIDE') {
+                meting.parentNode.removeChild(meting);
+                document.body.appendChild(meting);
+              }
+            }
+          }
+        }
+      };
+        var meting_api = "https://api.injahow.cn/meting/";
+    </script>
+  
+<script src="https://npm.webcache.cn/aplayer@1.10.1/dist/APlayer.min.js" integrity="sha384-gdGYZwHnfJM54evoZhpO0s6ZF5BQiybkiyW7VXr+h5UfruuRL&#x2F;aORyw+5+HZoU6e" crossorigin="anonymous" defer onload="setupAPlayer()"></script>
+
+    
+<script src="https://npm.webcache.cn/meting@2.0.1/dist/Meting.min.js" integrity="sha384-ASVlpKF80A22OXTK3tfEjZm1EL6uFMKIC4p8+0maanw1S&#x2F;IyB+Y4JG+ZDU7GpKE8" crossorigin="anonymous" defer></script>
+
+
+
+  </body>
+  </html>
