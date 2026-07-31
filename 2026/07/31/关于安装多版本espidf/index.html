@@ -9,7 +9,7 @@
   
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_ex15nbittbh';window.REIMU_CONFIG.clipboard_tips = {"success":{"zh-CN":"复制成功 (*^▽^*)"},"fail":{"zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://wdjmzlve.github.io';window.REIMU_CONFIG.relative = '/';</script>
   <title>
-    Hello World | Meager Cottage
+    安装多个版本espidf遇到的问题 | Meager Cottage
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic|Noto Serif SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic|Noto Serif SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media='all'">
@@ -17,15 +17,15 @@
     
 <link rel="stylesheet" href="/css/loader.css">
 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="ESP-IDF 5.5.4 多版本安装问题解决记录问题描述在已通过 EIM (Espressif Installer Manager) GUI 成功安装 ESP-IDF 6.0 版本的前提下，继续使用 EIM GUI 离线安装 ESP-IDF 5.5.4 版本时安装失败。 错误日志关键信息122026-05-16 22:33:15 - 10 - 05 - WARN - Failed to inst">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://wdjmzlve.github.io/2026/05/17/hello-world/index.html">
+<meta property="og:title" content="安装多个版本espidf遇到的问题">
+<meta property="og:url" content="http://wdjmzlve.github.io/2026/07/31/%E5%85%B3%E4%BA%8E%E5%AE%89%E8%A3%85%E5%A4%9A%E7%89%88%E6%9C%ACespidf/index.html">
 <meta property="og:site_name" content="Meager Cottage">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="ESP-IDF 5.5.4 多版本安装问题解决记录问题描述在已通过 EIM (Espressif Installer Manager) GUI 成功安装 ESP-IDF 6.0 版本的前提下，继续使用 EIM GUI 离线安装 ESP-IDF 5.5.4 版本时安装失败。 错误日志关键信息122026-05-16 22:33:15 - 10 - 05 - WARN - Failed to inst">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-05-16T17:31:37.171Z">
-<meta property="article:modified_time" content="2026-05-21T16:11:07.759Z">
+<meta property="article:published_time" content="2026-07-31T05:28:04.086Z">
+<meta property="article:modified_time" content="2026-07-31T05:28:04.087Z">
 <meta property="article:author" content="wdjmzlve">
 <meta name="twitter:card" content="summary">
     <link rel="alternate" href="/atom.xml" title="Meager Cottage" type="application/atom+xml">
@@ -118,12 +118,6 @@
             </div>
           <span class="main-nav-link">友链</span>
         </a>
-        <a class="main-nav-link-wrap" href="/friend">
-            <div class="main-nav-icon icon rotate">
-                &#xe62b;
-            </div>
-          <span class="main-nav-link">友链</span>
-        </a>
     <a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
   </nav>
   <nav id="sub-nav" aria-label="Secondary navigation">
@@ -133,11 +127,11 @@
 <header id="header" aria-label="Site header">
         <picture>
         </picture>
-          <img  fetchpriority="high" src="/images/banner.webp" alt="Hello World">
+          <img  fetchpriority="high" src="/images/banner.webp" alt="安装多个版本espidf遇到的问题">
   <div id="header-outer">
     <div id="header-title">
           <span id="logo">
-            <h1 data-aos="slide-up">Hello World</h1>
+            <h1 data-aos="slide-up">安装多个版本espidf遇到的问题</h1>
           </span>
         <h2 id="subtitle-wrap" data-aos="slide-down">
         </h2>
@@ -152,7 +146,7 @@
     <div class="sidebar-wrap" data-aos="fade-up">
           <div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
 <div class="sidebar-toc-wrapper toc-div-class" >
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ESP-IDF-5-5-4-%E5%A4%9A%E7%89%88%E6%9C%AC%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E8%AE%B0%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">ESP-IDF 5.5.4 多版本安装问题解决记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97%E5%85%B3%E9%94%AE%E4%BF%A1%E6%81%AF"><span class="toc-number">1.2.</span> <span class="toc-text">错误日志关键信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E6%9C%AC%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="toc-number">1.3.</span> <span class="toc-text">根本原因分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.4.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E4%BF%A1%E6%81%AF"><span class="toc-number">1.4.1.</span> <span class="toc-text">环境信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E6%88%90%E5%8A%9F%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4"><span class="toc-number">1.4.2.</span> <span class="toc-text">最终成功安装命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="toc-number">1.4.3.</span> <span class="toc-text">参数说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%AA%8C%E8%AF%81"><span class="toc-number">1.5.</span> <span class="toc-text">安装验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">1.6.</span> <span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.7.</span> <span class="toc-text">总结与注意事项</span></a></li></ol></li></ol>
 </div>
 </div>
           <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
@@ -163,11 +157,11 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">3</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
-    <div class="sidebar-state-number">3</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>标签</div>
@@ -200,13 +194,6 @@
               &#xe62b;
           </div>
         <div class="sidebar-menu-link">关于</div>
-      </div>
-      <div class="sidebar-menu-link-wrap">
-        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
-          <div class="sidebar-menu-icon icon rotate">
-              &#xe62b;
-          </div>
-        <div class="sidebar-menu-link">友链</div>
       </div>
       <div class="sidebar-menu-link-wrap">
         <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
@@ -245,13 +232,13 @@
   </div>
 </aside>
 
-          <section id="main" aria-label="Main content"><article id="post-hello-world" class="h-entry article" itemscope itemtype="https://schema.org/BlogPosting">
+          <section id="main" aria-label="Main content"><article id="post-关于安装多版本espidf" class="h-entry article" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner" data-aos="fade-up">
     <div class="article-meta">
       <div class="article-date">
   <span class="article-date-link icon-calendar" data-aos="zoom-in">
-    <time datetime="2026-05-16T17:31:37.171Z" itemprop="datePublished">2026-05-17</time>
-    <time style="display: none;" id="post-update-time">2026-05-22</time>
+    <time datetime="2026-07-31T05:28:04.086Z" itemprop="datePublished">2026-07-31</time>
+    <time style="display: none;" id="post-update-time">2026-07-31</time>
   </span>
 </div>
 
@@ -260,19 +247,64 @@
     <div class="hr-line"></div>
     
     <div class="e-content article-entry" itemprop="articleBody">
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <h1 id="ESP-IDF-5-5-4-多版本安装问题解决记录"><a href="#ESP-IDF-5-5-4-多版本安装问题解决记录" class="headerlink" title="ESP-IDF 5.5.4 多版本安装问题解决记录"></a>ESP-IDF 5.5.4 多版本安装问题解决记录</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在已通过 EIM (Espressif Installer Manager) GUI 成功安装 ESP-IDF 6.0 版本的前提下，继续使用 EIM GUI 离线安装 ESP-IDF 5.5.4 版本时安装失败。</p>
+<h2 id="错误日志关键信息"><a href="#错误日志关键信息" class="headerlink" title="错误日志关键信息"></a>错误日志关键信息</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2026-05-16 22:33:15 - 10 - 05 - WARN - Failed to install Scoop: &quot;Windows PowerShell...乱码...&quot;</span><br><span class="line">2026-05-16 22:33:15 - 10 - 05 - ERROR - Failed to write 7zip manifest: 系统找不到指定的路径。(os error 3)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h2 id="根本原因分析"><a href="#根本原因分析" class="headerlink" title="根本原因分析"></a>根本原因分析</h2><ol>
+<li><p><strong>EIM 离线安装模式设计缺陷</strong>：即使系统中已经存在可用的 Scoop 包管理器（来自 6.0 版本安装），EIM GUI 的离线安装流程仍然会强制尝试重新安装一个离线版 Scoop，完全忽略现有 Scoop 环境。</p>
+</li>
+<li><p><strong>PowerShell 编码不兼容</strong>：EIM 自带的离线 Scoop 安装脚本 <code>install_scoop_offline.ps1</code> 使用 UTF-8 编码编写，而 Windows PowerShell 默认使用 GBK 编码，导致脚本执行时出现乱码并失败。</p>
+</li>
+<li><p><strong>级联错误</strong>：由于 Scoop 安装脚本执行失败，EIM 误以为 Scoop 已成功安装，尝试向不存在的 Scoop 目录写入 7zip 配置文件，最终抛出”系统找不到指定的路径”错误。</p>
+</li>
+</ol>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>放弃使用 EIM GUI 安装，切换到 EIM CLI 命令行工具，并使用 <code>--skip-prerequisites-check</code> 参数强制跳过所有依赖检查（包括有问题的 Scoop 安装步骤），直接使用系统中已有的正常 Scoop 环境。</p>
+<h3 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h3><ul>
+<li>EIM CLI 版本：0.12.2</li>
+<li>已安装版本：ESP-IDF 6.0</li>
+<li>目标安装版本：ESP-IDF 5.5.4</li>
+<li>离线包路径：<code>E:\Bing\archive_v5.5.4_windows-x64.zst</code></li>
+<li>目标安装路径：<code>D:\esp\v5.5.4\esp-idf</code></li>
+<li>全局工具链路径：<code>C:\Espressif\tools</code>（与 6.0 版本共享）</li>
+</ul>
+<h3 id="最终成功安装命令"><a href="#最终成功安装命令" class="headerlink" title="最终成功安装命令"></a>最终成功安装命令</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.\eim<span class="literal">-cli-windows-x64</span> install `</span><br><span class="line">  <span class="literal">--use-local-archive</span> E:\Bing\archive_v5.<span class="number">5.4</span>_windows<span class="literal">-x64</span>.zst `</span><br><span class="line">  <span class="literal">--skip-prerequisites-check</span> true `</span><br><span class="line">  <span class="literal">--path</span> D:\esp\v5.<span class="number">5.4</span>\esp<span class="literal">-idf</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--use-local-archive &lt;path&gt;</code></td>
+<td>指定本地离线安装包路径，强制使用离线模式</td>
+</tr>
+<tr>
+<td><code>--skip-prerequisites-check true</code></td>
+<td><strong>核心参数</strong>，跳过所有依赖检查，包括 Scoop、Python 等</td>
+</tr>
+<tr>
+<td><code>--path &lt;path&gt;</code></td>
+<td>指定 ESP-IDF 5.5.4 的安装路径</td>
+</tr>
+</tbody></table>
+<h2 id="安装验证"><a href="#安装验证" class="headerlink" title="安装验证"></a>安装验证</h2><ol>
+<li>安装完成后，桌面会自动生成”ESP-IDF 5.5.4 PowerShell Terminal”快捷方式</li>
+<li>打开该终端，执行以下命令验证安装：<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">idf.py <span class="literal">--version</span></span><br></pre></td></tr></table></figure></li>
+<li>预期输出：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ESP-IDF v5.5.4</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>安装完成后，多版本共存的目录结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">D:\esp\</span><br><span class="line">├── v6.0\</span><br><span class="line">│   └── esp-idf\  # 已有的 6.0 版本</span><br><span class="line">└── v5.5.4\</span><br><span class="line">    └── esp-idf\  # 新安装的 5.5.4 版本</span><br><span class="line"></span><br><span class="line">C:\Espressif\tools\  # 全局共享的工具链目录（所有版本共用）</span><br><span class="line">├── xtensa-esp32-elf\</span><br><span class="line">├── cmake\</span><br><span class="line">├── ninja\</span><br><span class="line">└── ... 其他工具</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h2 id="总结与注意事项"><a href="#总结与注意事项" class="headerlink" title="总结与注意事项"></a>总结与注意事项</h2><ol>
+<li>EIM GUI 的离线安装模式存在已知 bug，在已有 Scoop 环境的情况下会强制重新安装并失败。</li>
+<li>EIM CLI 比 GUI 更稳定、更可控，是多版本安装的首选方式。</li>
+<li><code>--skip-prerequisites-check true</code> 参数是解决此问题的关键，它允许 EIM 直接使用系统中已有的依赖环境。</li>
+<li>所有版本的 ESP-IDF 共享同一个全局工具链目录 <code>C:\Espressif\tools</code>，节省磁盘空间。</li>
+<li>每个版本有独立的 Python 虚拟环境，不会互相干扰。</li>
+<li>以后安装其他版本的 ESP-IDF 时，都可以使用此方法避免遇到同样的问题。</li>
+</ol>
 
     </div>
     <footer class="article-footer">
@@ -282,11 +314,11 @@
   </div>
     <nav id="article-nav" aria-label="Article navigation" data-aos="fade-up">
       <div class="article-nav-link-wrap left">
-            <img data-src="/images/banner.webp" data-sizes="auto" alt="安装多个版本espidf遇到的问题" class="lazyload">
-        <a href="/2026/06/18/%E5%85%B3%E4%BA%8E%E5%AE%89%E8%A3%85%E5%A4%9A%E7%89%88%E6%9C%ACespidf/" aria-label="前一篇: 安装多个版本espidf遇到的问题" title="前一篇: 安装多个版本espidf遇到的问题"></a>
+            <img data-src="/images/banner.webp" data-sizes="auto" alt="Hello World" class="lazyload">
+        <a href="/2026/07/31/hello-world/" aria-label="前一篇: Hello World" title="前一篇: Hello World"></a>
         <div class="article-nav-caption">前一篇</div>
         <h3 class="article-nav-title">
-            安装多个版本espidf遇到的问题
+            Hello World
         </h3>
       </div>
   </nav>
@@ -313,10 +345,10 @@
       </div>
       <div>
         <span class="icon-brush"></span>
-        2.9k
+        2.4k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        00:13
+        00:11
       </div>
       <div>
         <span class="icon-eye"></span>
@@ -338,7 +370,7 @@
   <div class="sidebar-wrap">
         <div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
 <div class="sidebar-toc-wrapper toc-div-class" >
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ESP-IDF-5-5-4-%E5%A4%9A%E7%89%88%E6%9C%AC%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E8%AE%B0%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">ESP-IDF 5.5.4 多版本安装问题解决记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97%E5%85%B3%E9%94%AE%E4%BF%A1%E6%81%AF"><span class="toc-number">1.2.</span> <span class="toc-text">错误日志关键信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E6%9C%AC%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="toc-number">1.3.</span> <span class="toc-text">根本原因分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.4.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E4%BF%A1%E6%81%AF"><span class="toc-number">1.4.1.</span> <span class="toc-text">环境信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E6%88%90%E5%8A%9F%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4"><span class="toc-number">1.4.2.</span> <span class="toc-text">最终成功安装命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="toc-number">1.4.3.</span> <span class="toc-text">参数说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%AA%8C%E8%AF%81"><span class="toc-number">1.5.</span> <span class="toc-text">安装验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">1.6.</span> <span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.7.</span> <span class="toc-text">总结与注意事项</span></a></li></ol></li></ol>
 </div>
 </div>
         <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
@@ -349,11 +381,11 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">3</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
-    <div class="sidebar-state-number">3</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>标签</div>
@@ -386,13 +418,6 @@
               &#xe62b;
           </div>
         <div class="sidebar-menu-link">关于</div>
-      </div>
-      <div class="sidebar-menu-link-wrap">
-        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
-          <div class="sidebar-menu-icon icon rotate">
-              &#xe62b;
-          </div>
-        <div class="sidebar-menu-link">友链</div>
       </div>
       <div class="sidebar-menu-link-wrap">
         <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
@@ -486,13 +511,13 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "wdjmzlve",
-          title: "Hello World",
-          url: "http://wdjmzlve.github.io/2026/05/17/hello-world/",
+          title: "安装多个版本espidf遇到的问题",
+          url: "http://wdjmzlve.github.io/2026/07/31/%E5%85%B3%E4%BA%8E%E5%AE%89%E8%A3%85%E5%A4%9A%E7%89%88%E6%9C%ACespidf/",
           excerpt: "",
           description: "",
-          stripContent: "Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &amp;quot;My New Po",
-          date: "Sun May 17 2026 01:31:37 GMT+0800",
-          updated: "Fri May 22 2026 00:11:07 GMT+0800",
+          stripContent: "ESP-IDF 5.5.4 多版本安装问题解决记录问题描述在已通过 EIM (Espressif Installer Manager) GUI 成功安装 ESP-IDF 6.0 版本的前提下，继续使用 EIM GUI 离线安装 ESP-IDF 5.5.4 版本时安装失败。 错误日志关键信息122026-05-16 22:33:15 - 10 - 05 - WARN - Failed to install Scoop: &amp;quot;Windows PowerShell...乱码...&amp;quot;2",
+          date: "Fri Jul 31 2026 05:28:04 GMT+0000",
+          updated: "Fri Jul 31 2026 05:28:04 GMT+0000",
           cover: "/images/banner.webp",
         };
       </script>
