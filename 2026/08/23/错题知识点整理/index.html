@@ -9,7 +9,7 @@
   
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_ex15nbittbh';window.REIMU_CONFIG.clipboard_tips = {"success":{"zh-CN":"复制成功 (*^▽^*)"},"fail":{"zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://wdjmzlve.github.io';window.REIMU_CONFIG.relative = '/';</script>
   <title>
-    Hello World | Meager Cottage
+    错题知识点整理 | Meager Cottage
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic|Noto Serif SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic|Noto Serif SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media='all'">
@@ -17,16 +17,20 @@
     
 <link rel="stylesheet" href="/css/loader.css">
 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="按主题分类整理的错题知识点,已校对修正。标注「※修正」为原记录有误之处,「※补充」为原记录不完整之处。  一、服务器硬件管理(BMC &#x2F; IPMI &#x2F; PECI) IPMI(Intelligent Platform Management Interface,智能平台管理接口) 是一种开放标准接口协议,用于远程管理和监控服务器硬件状态。它通过 BMC(Baseboard Man">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://wdjmzlve.github.io/2026/07/31/hello-world/index.html">
+<meta property="og:title" content="错题知识点整理">
+<meta property="og:url" content="http://wdjmzlve.github.io/2026/08/23/%E9%94%99%E9%A2%98%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/index.html">
 <meta property="og:site_name" content="Meager Cottage">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="按主题分类整理的错题知识点,已校对修正。标注「※修正」为原记录有误之处,「※补充」为原记录不完整之处。  一、服务器硬件管理(BMC &#x2F; IPMI &#x2F; PECI) IPMI(Intelligent Platform Management Interface,智能平台管理接口) 是一种开放标准接口协议,用于远程管理和监控服务器硬件状态。它通过 BMC(Baseboard Man">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-07-31T20:00:00.000Z">
-<meta property="article:modified_time" content="2026-08-23T05:37:26.541Z">
+<meta property="article:published_time" content="2026-08-23T20:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-23T05:37:26.542Z">
 <meta property="article:author" content="wdjmzlve">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="知识点">
+<meta property="article:tag" content="错题">
+<meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
     <link rel="alternate" href="/atom.xml" title="Meager Cottage" type="application/atom+xml">
     <link rel="shortcut icon" href="/images/favicon.ico">
@@ -127,11 +131,11 @@
 <header id="header" aria-label="Site header">
         <picture>
         </picture>
-          <img  fetchpriority="high" src="/images/banner.webp" alt="Hello World">
+          <img  fetchpriority="high" src="/images/banner.webp" alt="错题知识点整理">
   <div id="header-outer">
     <div id="header-title">
           <span id="logo">
-            <h1 data-aos="slide-up">Hello World</h1>
+            <h1 data-aos="slide-up">错题知识点整理</h1>
           </span>
         <h2 id="subtitle-wrap" data-aos="slide-down">
         </h2>
@@ -162,7 +166,7 @@
     <div class="sidebar-wrap" data-aos="fade-up">
           <div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
 <div class="sidebar-toc-wrapper toc-div-class" >
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E4%BB%B6%E7%AE%A1%E7%90%86-BMC-IPMI-PECI"><span class="toc-number">1.</span> <span class="toc-text">一、服务器硬件管理(BMC &#x2F; IPMI &#x2F; PECI)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9B%BA%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8-UEFI-PXE-%E5%A4%9A%E6%A0%B8%E5%90%AF%E5%8A%A8"><span class="toc-number">2.</span> <span class="toc-text">二、固件与系统启动(UEFI &#x2F; PXE &#x2F; 多核启动)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8"><span class="toc-number">3.</span> <span class="toc-text">三、操作系统内核</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B8%8E-I-O"><span class="toc-number">4.</span> <span class="toc-text">四、虚拟化与 I&#x2F;O</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%BD%91%E7%BB%9C"><span class="toc-number">5.</span> <span class="toc-text">五、网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AD%98%E5%82%A8"><span class="toc-number">6.</span> <span class="toc-text">六、存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%AE%89%E5%85%A8"><span class="toc-number">7.</span> <span class="toc-text">七、安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E8%B0%83%E8%AF%95%E4%B8%8E%E6%80%A7%E8%83%BD%E5%B7%A5%E5%85%B7"><span class="toc-number">8.</span> <span class="toc-text">八、调试与性能工具</span></a></li></ol>
 </div>
 </div>
           <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
@@ -231,12 +235,12 @@
   </div>
 </aside>
 
-          <section id="main" aria-label="Main content"><article id="post-hello-world" class="h-entry article" itemscope itemtype="https://schema.org/BlogPosting">
+          <section id="main" aria-label="Main content"><article id="post-错题知识点整理" class="h-entry article" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner" data-aos="fade-up">
     <div class="article-meta">
       <div class="article-date">
   <span class="article-date-link icon-calendar" data-aos="zoom-in">
-    <time datetime="2026-07-31T20:00:00.000Z" itemprop="datePublished">2026-07-31</time>
+    <time datetime="2026-08-23T20:00:00.000Z" itemprop="datePublished">2026-08-23</time>
     <time style="display: none;" id="post-update-time">2026-08-23</time>
   </span>
 </div>
@@ -246,41 +250,75 @@
     <div class="hr-line"></div>
     
     <div class="e-content article-entry" itemprop="articleBody">
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <blockquote>
+<p>按主题分类整理的错题知识点,已校对修正。标注「※修正」为原记录有误之处,「※补充」为原记录不完整之处。</p>
+</blockquote>
+<h2 id="一、服务器硬件管理-BMC-IPMI-PECI"><a href="#一、服务器硬件管理-BMC-IPMI-PECI" class="headerlink" title="一、服务器硬件管理(BMC &#x2F; IPMI &#x2F; PECI)"></a>一、服务器硬件管理(BMC &#x2F; IPMI &#x2F; PECI)</h2><ol>
+<li><strong>IPMI(Intelligent Platform Management Interface,智能平台管理接口)</strong> 是一种开放标准接口协议,用于远程管理和监控服务器硬件状态。它通过 <strong>BMC(Baseboard Management Controller,基板管理控制器)</strong> 实现,提供<strong>带外管理(out-of-band)</strong> 功能——即使服务器操作系统崩溃,也能进行管理操作。</li>
+<li><strong>BMC 通过 IPMI 监控 CPU 温度时,读数恒为 0</strong>,可能原因是 <strong>PECI(Platform Environment Control Interface,平台环境控制接口)未初始化</strong>。PECI 是 CPU 与 BMC 之间传递温度等遥测数据的专用接口。</li>
+<li><strong>BMC(基板管理控制器)</strong> 负责监控和管理硬件状态(温度、电压、风扇、电源等)。</li>
+<li><strong>BMC 冷重启(cold reset)</strong> 指完全断电后重启;热重启(warm reset)则指不断电仅复位固件。</li>
+<li>※修正 <del>BMC 固件只能通过 IPMI 协议控制远程服务器</del> → <strong>错误</strong>。BMC 除了 IPMI 外,还支持 <strong>Redfish(基于 HTTPS&#x2F;RESTful API,现代服务器主流)</strong>、SNMP、SSH、Web 管理界面等多种管理方式。IPMI 只是其中一种(且偏底层、安全性较差)。</li>
+</ol>
+<h2 id="二、固件与系统启动-UEFI-PXE-多核启动"><a href="#二、固件与系统启动-UEFI-PXE-多核启动" class="headerlink" title="二、固件与系统启动(UEFI &#x2F; PXE &#x2F; 多核启动)"></a>二、固件与系统启动(UEFI &#x2F; PXE &#x2F; 多核启动)</h2><ol start="6">
+<li><strong>UEFI</strong> 使用 <strong>FAT32</strong> 文件系统(ESP,EFI System Partition)来引导操作系统。</li>
+<li><strong>PXE(Preboot eXecution Environment,预启动执行环境)</strong>:使用网卡启动,通过 <strong>TFTP(简单文件传输协议)</strong> 从 TFTP 服务器下载引导程序,实现<strong>无盘启动</strong>。</li>
+<li><strong>多核 x86 服务器启动时,从核(AP,Application Processor)的启动初始代码由主核(BSP,Bootstrap Processor)提供</strong>。BSP 负责初始化系统并引导 AP 进入实模式执行启动代码。</li>
+</ol>
+<h2 id="三、操作系统内核"><a href="#三、操作系统内核" class="headerlink" title="三、操作系统内核"></a>三、操作系统内核</h2><ol start="9">
+<li><strong>内存屏障(Memory Barrier)</strong>:※补充 为了提升性能,编译器和 CPU 会对指令进行<strong>重排序</strong>,但这可能破坏多线程&#x2F;多核场景下的内存可见性。内存屏障用于<strong>禁止特定方向的重排,保证内存操作顺序</strong>:<ul>
+<li><strong>编译屏障</strong>:阻止编译器重排(如 <code>barrier()</code> 宏);</li>
+<li><strong>CPU 屏障</strong>:x86 上为 <code>mfence</code>(全屏障)&#x2F; <code>lfence</code>(读屏障)&#x2F; <code>sfence</code>(写屏障),ARM 上为 <code>dmb</code> &#x2F; <code>dsb</code> &#x2F; <code>isb</code>;</li>
+<li>Linux 内核中常用 <code>smp_mb()</code> &#x2F; <code>smp_rmb()</code> &#x2F; <code>smp_wmb()</code> 等。</li>
+</ul>
+</li>
+<li><strong>RCU(Read-Copy-Update)</strong>:允许读写操作并发执行,适用于<strong>读多写少</strong>的场景,通过<strong>延迟释放内存(宽限期后回收)</strong> 来确保数据一致性。</li>
+<li><strong>OOM Killer</strong>:当系统内存严重不足时,内核会<strong>选择性地杀死某些进程</strong>以释放内存。</li>
+<li><strong>用户态进入内核态</strong>是通过<strong>系统调用</strong>(此外还有中断和异常)实现的。</li>
+<li><strong>Linux 中可用于实时分析中断延迟的工具</strong>:<strong>ftrace</strong>、<strong>cyclictest</strong>(cyclictest 是 rt-tests 套件中的标准延迟测试工具)。</li>
+<li><strong>野指针出现的原因</strong>:<ul>
+<li>指针没有初始化;</li>
+<li>被 <code>free</code> &#x2F; <code>delete</code> 之后没有置为 <code>NULL</code>;</li>
+<li>指针指向了<strong>超出变量作用域</strong>的内存。</li>
+</ul>
+</li>
+<li>※修正 <del>SDLC(系统调用周期)</del> → <strong>疑为笔误,不完整</strong>。SDLC 通常指 <strong>Software Development Life Cycle(软件开发生命周期)</strong>;若原意是系统调用,正确表述为:<strong>系统调用(System Call)是应用程序请求内核服务的唯一入口</strong>,涉及用户态→内核态的切换、参数传递与返回。</li>
+</ol>
+<h2 id="四、虚拟化与-I-O"><a href="#四、虚拟化与-I-O" class="headerlink" title="四、虚拟化与 I&#x2F;O"></a>四、虚拟化与 I&#x2F;O</h2><ol start="16">
+<li><strong>KVM(Kernel-based Virtual Machine,内核虚拟机)</strong>:基于硬件辅助(Intel VT-x &#x2F; AMD-V)实现的<strong>完全虚拟化</strong>。</li>
+<li>※修正 <del>SR-IOV 和设备直通必须?intel UFd</del> → <strong>不完整&#x2F;笔误</strong>。SR-IOV(Single Root I&#x2F;O Virtualization,单根 I&#x2F;O 虚拟化)与设备直通(Device Passthrough,即 PCI passthrough)需要 <strong>Intel VT-d</strong>(Directed I&#x2F;O,直接 I&#x2F;O 虚拟化,含 IOMMU)支持;AMD 平台对应 <strong>AMD-Vi &#x2F; IOMMU</strong>。UFd 应为 VT-d 的误记。</li>
+<li><strong>TLB(Translation Lookaside Buffer,转换后备缓冲器)</strong> ※补充:是 CPU 内部的高速缓存,用于<strong>缓存虚拟地址到物理地址的映射(页表项)</strong>,加速地址转换;TLB 未命中时会触发页表遍历(Page Walk),性能显著下降。</li>
+</ol>
+<h2 id="五、网络"><a href="#五、网络" class="headerlink" title="五、网络"></a>五、网络</h2><ol start="19">
+<li><strong>VLAN(虚拟局域网)</strong>:用来创建<strong>逻辑分区以隔离网络流量</strong>(二层隔离,需交换机支持 802.1Q)。</li>
+<li><strong>QUIC 协议基于 UDP</strong>;当中间设备<strong>阻断 UDP 443 端口</strong>时,QUIC 无法工作,会<strong>退回 TCP 协议</strong>(HTTP&#x2F;3 → HTTP&#x2F;2)。</li>
+</ol>
+<h2 id="六、存储"><a href="#六、存储" class="headerlink" title="六、存储"></a>六、存储</h2><ol start="21">
+<li><strong>UFS(Universal Flash Storage,通用闪存存储)</strong>:主要用于提供<strong>文件存储和访问</strong>(常见于移动设备、嵌入式系统的高速闪存)。</li>
+</ol>
+<h2 id="七、安全"><a href="#七、安全" class="headerlink" title="七、安全"></a>七、安全</h2><ol start="22">
+<li><strong>防止 XSS(跨站脚本攻击)的常见方法</strong>:验证&#x2F;过滤<strong>用户输入</strong>(输入校验、白名单),并在输出时进行<strong>转义&#x2F;编码</strong>(HTML 实体编码),同时可配合 CSP(内容安全策略)。</li>
+</ol>
+<h2 id="八、调试与性能工具"><a href="#八、调试与性能工具" class="headerlink" title="八、调试与性能工具"></a>八、调试与性能工具</h2><ol start="23">
+<li><strong>调试内存池应优先使用的工具</strong>:<strong>Valgrind</strong>(Memcheck 检测内存泄漏、非法访问)。</li>
+<li><strong>线程和协程共享堆内存</strong>——线程共享所属进程的堆;协程(同一线程内)同样共享该线程的堆。</li>
+</ol>
 
     </div>
     <footer class="article-footer">
-      
-      
+        <a class="article-category-link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" title="嵌入式" data-aos="zoom-in">嵌入式</a>
+
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" rel="tag" title="嵌入式">嵌入式</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag" title="知识点">知识点</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/%E9%94%99%E9%A2%98/" rel="tag" title="错题">错题</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag" title="面试">面试</a></li></ul>
+
     </footer>
   </div>
     <nav id="article-nav" aria-label="Article navigation" data-aos="fade-up">
-      <div class="article-nav-link-wrap left">
-            <img data-src="/images/banner.webp" data-sizes="auto" alt="《终将成为你》漫画杂谈" class="lazyload">
-        <a href="/2026/07/31/%E7%BB%88%E5%B0%86%E6%88%90%E4%B8%BA%E4%BD%A0-%E6%BC%AB%E7%94%BB%E6%9D%82%E8%B0%88/" aria-label="前一篇: 《终将成为你》漫画杂谈" title="前一篇: 《终将成为你》漫画杂谈"></a>
-        <div class="article-nav-caption">前一篇</div>
-        <h3 class="article-nav-title">
-            《终将成为你》漫画杂谈
-        </h3>
-      </div>
     <div class="article-nav-link-wrap right">
-          <img data-src="/images/banner.webp" data-sizes="auto" alt="安装多个版本espidf遇到的问题" class="lazyload">
-      <a href="/2026/07/31/%E5%85%B3%E4%BA%8E%E5%AE%89%E8%A3%85%E5%A4%9A%E7%89%88%E6%9C%ACespidf/" aria-label="后一篇: 安装多个版本espidf遇到的问题"  title="后一篇: 安装多个版本espidf遇到的问题"></a>
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="《终将成为你》漫画杂谈" class="lazyload">
+      <a href="/2026/07/31/%E7%BB%88%E5%B0%86%E6%88%90%E4%B8%BA%E4%BD%A0-%E6%BC%AB%E7%94%BB%E6%9D%82%E8%B0%88/" aria-label="后一篇: 《终将成为你》漫画杂谈"  title="后一篇: 《终将成为你》漫画杂谈"></a>
       <div class="article-nav-caption">后一篇</div>
       <h3 class="article-nav-title">
-          安装多个版本espidf遇到的问题
+          《终将成为你》漫画杂谈
       </h3>
     </div>
   </nav>
@@ -332,7 +370,7 @@
   <div class="sidebar-wrap">
         <div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
 <div class="sidebar-toc-wrapper toc-div-class" >
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E4%BB%B6%E7%AE%A1%E7%90%86-BMC-IPMI-PECI"><span class="toc-number">1.</span> <span class="toc-text">一、服务器硬件管理(BMC &#x2F; IPMI &#x2F; PECI)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9B%BA%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8-UEFI-PXE-%E5%A4%9A%E6%A0%B8%E5%90%AF%E5%8A%A8"><span class="toc-number">2.</span> <span class="toc-text">二、固件与系统启动(UEFI &#x2F; PXE &#x2F; 多核启动)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8"><span class="toc-number">3.</span> <span class="toc-text">三、操作系统内核</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%99%9A%E6%8B%9F%E5%8C%96%E4%B8%8E-I-O"><span class="toc-number">4.</span> <span class="toc-text">四、虚拟化与 I&#x2F;O</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%BD%91%E7%BB%9C"><span class="toc-number">5.</span> <span class="toc-text">五、网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AD%98%E5%82%A8"><span class="toc-number">6.</span> <span class="toc-text">六、存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%AE%89%E5%85%A8"><span class="toc-number">7.</span> <span class="toc-text">七、安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E8%B0%83%E8%AF%95%E4%B8%8E%E6%80%A7%E8%83%BD%E5%B7%A5%E5%85%B7"><span class="toc-number">8.</span> <span class="toc-text">八、调试与性能工具</span></a></li></ol>
 </div>
 </div>
         <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
@@ -473,12 +511,12 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "wdjmzlve",
-          title: "Hello World",
-          url: "http://wdjmzlve.github.io/2026/07/31/hello-world/",
+          title: "错题知识点整理",
+          url: "http://wdjmzlve.github.io/2026/08/23/%E9%94%99%E9%A2%98%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/",
           excerpt: "",
           description: "",
-          stripContent: "Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &amp;quot;My New Po",
-          date: "Fri Jul 31 2026 20:00:00 GMT+0000",
+          stripContent: " 按主题分类整理的错题知识点,已校对修正。标注「※修正」为原记录有误之处,「※补充」为原记录不完整之处。  一、服务器硬件管理(BMC &amp;#x2F; IPMI &amp;#x2F; PECI) IPMI(Intelligent Platform Management Interface,智能平台管理接口) 是一种开放标准接口协议,用于远程管理和监控服务器硬件状态。它通过 BMC(Baseboard Management Controller,基板管理控制器) 实现,提供带外管理(out-of-band)",
+          date: "Sun Aug 23 2026 20:00:00 GMT+0000",
           updated: "Sun Aug 23 2026 05:37:26 GMT+0000",
           cover: "/images/banner.webp",
         };
